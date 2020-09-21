@@ -73,7 +73,7 @@ function render() {
 //------------
 //-----------------RenderLeftSection
 function renderResult() {
-  sectionLeft.style.visibility='visible';
+  sectionLeft.style.display='block';
   sectionRight.style.width='65%';
 
   let pElm = document.createElement('p');

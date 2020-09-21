@@ -97,7 +97,7 @@ cursor: pointer;
     float: left;
     border-radius: 20px;
     box-shadow: 6px 4px #679b9b;
-    visibility: hidden;
+    display: none;
 
 }
 #section-left article{
