@@ -6,6 +6,9 @@ const imagesPath = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'break
 
 const imagesName = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
 const artElm = document.getElementById('ArticleSubmit');
+let articleElm = document.getElementById('result');
+const sectionLeft = document.getElementById('section-left');
+let sectionRight = document.getElementById('section-right');
 
 let numOfImg = 3;
 let indexArr = [];
@@ -28,6 +31,9 @@ function Product(name, path) {
 //-----------------
 //-----------------RenderRightSection
 function render() {
+  if (sessionStorage.getItem('numImg')!==null)
+    numOfImg = sessionStorage.getItem('numImg');
+
   for (let i = 0; i < numOfImg; i++) {
     indexArr[i] = (getRandomInt(0, Product.all.length));
   }
@@ -67,18 +73,19 @@ function render() {
 //------------
 //-----------------RenderLeftSection
 function renderResult() {
-  let articleElm = document.getElementById('result');
+  sectionLeft.style.visibility='visible';
+  sectionRight.style.width='65%';
+
   let pElm = document.createElement('p');
   for (let i = 0; i < Product.all.length; i++) {
-    articleElm.appendChild(pElm);
-    pElm.textContent = `${Product.all[i].title} had ${Product.all[i].vote} votes and was shown ${Product.all[i].shown} times`;
     pElm = document.createElement('p');
+    pElm.innerHTML = `<span>${Product.all[i].title}</span> had (<span>${Product.all[i].vote}</span>) votes and was shown (<span>${Product.all[i].shown}</span>) times`;
+    articleElm.appendChild(pElm);
   }
-
+  articleElm.style.overflow='scroll';
 }
 //------------
 //-----------------Event
-let sectionRight = document.getElementById('section-right');
 sectionRight.addEventListener('click', voting);
 function voting(event) {
   let start = false;
@@ -121,15 +128,18 @@ function rounds(event) {
     location.reload();
 
   if (event.target.id === 'Change') {
-    numOfImg = Number(document.getElementById('imgNumber').value);
-    firstTime = true;
-    indexArr = [];
-    artElm.innerHTML = '';
-    for (let i = 0; i < Product.all.length; i++) {
-      Product.all[i].shown = 0;
-    }
-    render();
 
+    numOfImg = Number(document.getElementById('imgNumber').value);
+    sessionStorage.setItem('numImg',numOfImg);
+    if (numOfImg >= 1 && numOfImg<=Product.all.length) {
+      firstTime = true;
+      indexArr = [];
+      artElm.innerHTML = '';
+      for (let i = 0; i < Product.all.length; i++) {
+        Product.all[i].shown = 0;
+      }
+      render();
+    }
   }
 }
 //------------
@@ -140,10 +150,9 @@ for (let i = 0; i < imagesPath.length; i++) {
 //------------
 //------------Call Render Page
 render();
-
 window.addEventListener('load', function () {
   round = sessionStorage.getItem('round');
-  console.log(round);
+
   if (round === null)
     round = 25;
 
@@ -152,4 +161,6 @@ window.addEventListener('load', function () {
     renderResult();
   }
   sessionStorage.removeItem('round');
+  sessionStorage.removeItem('numImg');
+
 });
