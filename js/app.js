@@ -236,27 +236,29 @@ function chartMake() {
   var chart = new Chart(ctx, {
     // The type of chart we want to create
     type: type,
-
     // The data for our dataset
     data: {
+      fillOpacity: 0.5,
+
       labels: imagesName,
       categoryPercentage: 1,
       barPercentage: 1,
       datasets: [{
-        label: 'Shows',
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgb(255, 99, 132)',
-        data: shows,
-        maxBarThickness: 15,
-        hoverBackgroundColor: 'yellow',
-      }, {
         label: 'Votes',
-        backgroundColor: 'rgb(25, 99, 132)',
+        backgroundColor: 'rgb(25, 99, 132,0.7)',
         borderColor: 'rgb(25, 99, 132)',
         data: votes,
         maxBarThickness: 15,
         hoverBackgroundColor: 'yellow',
 
+
+      }, {
+        label: 'Shows',
+        backgroundColor: 'rgb(255, 99, 132,0.7)',
+        borderColor: 'rgb(255, 99, 132)',
+        data: shows,
+        maxBarThickness: 15,
+        hoverBackgroundColor: 'yellow',
       }]
     },
 
