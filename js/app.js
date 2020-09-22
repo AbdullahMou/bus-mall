@@ -1,9 +1,10 @@
+/* eslint-disable no-undef */
 'use strict';
 Product.all = [];
 let firstTime = true;
 let round = 25;
 const imagesPath = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'tauntaun.jpg', 'unicorn.jpg', 'usb.gif', 'water-can.jpg', 'wine-glass.jpg'];
-
+let hold = [];
 const imagesName = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
 const artElm = document.getElementById('ArticleSubmit');
 let articleElm = document.getElementById('result');
@@ -29,14 +30,12 @@ function Product(name, path) {
   Product.all.push(this);
 }
 //-----------------
-//-----------------RenderRightSection
-function render() {
-  if (sessionStorage.getItem('numImg')!==null)
-    numOfImg = sessionStorage.getItem('numImg');
+function noReplacte() {
 
   for (let i = 0; i < numOfImg; i++) {
     indexArr[i] = (getRandomInt(0, Product.all.length));
   }
+
   for (let i = 0; i < numOfImg; i++) {
     for (let k = 0; k < indexArr.length; k++) {
       if (i === k)
@@ -49,7 +48,37 @@ function render() {
       }
     }
   }
+  return true;
+}
+//-----------------------
+function noDublicate() {
 
+
+
+  for (let i = 0; i < indexArr.length; i++) {
+    for (let k = 0; k < hold.length; k++) {
+      if (indexArr[i] === hold[k]) {
+        indexArr[i] = getRandomInt(0, Product.all.length);
+        noReplacte();
+        noDublicate();
+
+      }
+    }
+  }
+
+  return true;
+}
+//-----------------RenderRightSection
+function render() {
+  if (sessionStorage.getItem('numImg') !== null)
+    numOfImg = sessionStorage.getItem('numImg');
+
+  noReplacte();
+  if (hold.length !== 0)
+    noDublicate();
+  //---
+  hold = indexArr.slice();
+  console.log(indexArr);
   //-----
   //--- Src Attribute
   let imgElm = document.createElement('img');
@@ -73,8 +102,8 @@ function render() {
 //------------
 //-----------------RenderLeftSection
 function renderResult() {
-  sectionLeft.style.display='block';
-  sectionRight.style.width='65%';
+  sectionLeft.style.display = 'block';
+  sectionRight.style.width = '65%';
 
   let pElm = document.createElement('p');
   for (let i = 0; i < Product.all.length; i++) {
@@ -82,7 +111,9 @@ function renderResult() {
     pElm.innerHTML = `<span>${Product.all[i].title}</span> had (<span>${Product.all[i].vote}</span>) votes and was shown (<span>${Product.all[i].shown}</span>) times`;
     articleElm.appendChild(pElm);
   }
-  articleElm.style.overflow='scroll';
+  articleElm.style.overflow = 'scroll';
+  chartMake();
+
 }
 //------------
 //-----------------Event
@@ -130,8 +161,8 @@ function rounds(event) {
   if (event.target.id === 'Change') {
 
     numOfImg = Number(document.getElementById('imgNumber').value);
-    sessionStorage.setItem('numImg',numOfImg);
-    if (numOfImg >= 1 && numOfImg<=Product.all.length) {
+    sessionStorage.setItem('numImg', numOfImg);
+    if (numOfImg >= 1 && numOfImg <= Product.all.length) {
       firstTime = true;
       indexArr = [];
       artElm.innerHTML = '';
@@ -158,9 +189,84 @@ window.addEventListener('load', function () {
 
   if (round <= 0) {
     sectionRight.removeEventListener('click', voting);
+
     renderResult();
   }
   sessionStorage.removeItem('round');
   sessionStorage.removeItem('numImg');
 
 });
+let type = 'bar';
+let pass = false;
+let inputListElm = document.getElementById('ChartType');
+inputListElm.addEventListener('change', chartTypeChose);
+function chartTypeChose(event) {
+  type = event.target.value;
+  pass = true;
+  renderResult();
+
+}
+let canvasContiner = document.getElementById('canvas-container');
+let canvasElm = document.createElement('canvas');
+canvasElm.id = 'myChart';
+canvasContiner.appendChild(canvasElm);
+// --------------------------------
+function chartMake() {
+  let shows = [], votes = [];
+  for (let i = 0; i < Product.all.length; i++) {
+    shows.push(Product.all[i].shown);
+    votes.push(Product.all[i].vote);
+  }
+
+
+  if (pass) {
+    canvasElm.parentNode.removeChild(canvasElm);
+    canvasElm = document.createElement('canvas');
+    canvasElm.id = 'myChart';
+    canvasContiner.appendChild(canvasElm);
+  }
+  const ctx = document.getElementById('myChart').getContext('2d');
+  if (pass) {
+    ctx.clearRect(0, 0, canvasElm.width, canvasElm.height);
+  }
+
+  canvasElm.style.display = 'block';
+
+  // eslint-disable-next-line no-unused-vars
+  var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: type,
+
+    // The data for our dataset
+    data: {
+      labels: imagesName,
+      categoryPercentage: 1,
+      barPercentage: 1,
+      datasets: [{
+        label: 'Shows',
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: 'rgb(255, 99, 132)',
+        data: shows,
+        maxBarThickness: 15,
+        hoverBackgroundColor: 'yellow',
+      }, {
+        label: 'Votes',
+        backgroundColor: 'rgb(25, 99, 132)',
+        borderColor: 'rgb(25, 99, 132)',
+        data: votes,
+        maxBarThickness: 15,
+        hoverBackgroundColor: 'yellow',
+
+      }]
+    },
+
+    // Configuration options go here
+    options: {
+      maintainAspectRatio: false,
+      title: {
+        display: true,
+        text: 'Bus Mall Product Bar'
+      }
+    }
+  });
+}
