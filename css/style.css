@@ -19,7 +19,7 @@
 body
 {
     
-    background-color:#ff9b76d8;
+    background-color:#ff9b76ad;
     width: 100%;
     padding-top:10px;
 
@@ -203,3 +203,22 @@ article::-webkit-scrollbar {
   ::-webkit-scrollbar-thumb:hover {
     background: yellow; 
   }
+
+  #myChart{
+background-color: #fce6d6d0;
+border-radius: 10px;
+box-shadow: 6px 4px #679b9b;
+border-color: var(--border-color);
+display: none;
+ width: 500px;
+ height: 200px;
+  }
+
+   #canvas-container{
+    position: relative;
+    width: 90%;
+    clear: both;
+    margin: auto;
+    margin-bottom: 10px;
+  }
+   

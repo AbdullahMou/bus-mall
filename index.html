@@ -3,7 +3,8 @@
 
 <head>
     <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@200&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@200&family=Lobster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@200&family=Lobster&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
     <title>Bus Mall</title>
@@ -30,7 +31,7 @@
 
 
             <article id='ArticleSubmit'>
-               
+
             </article>
             <article>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit reprehenderit consectetur rerum
@@ -47,12 +48,30 @@
             <article id="result">
             </article>
         </section>
+        <section id="canvas-container">
+        </section>
+
+        <label for="ChartType">Choose your chart Type from the list:</label>
+        <select list="ChartType" name="ChartType" id="ChartType">
+            <option value="bar">bar</option>
+            <option value="line">line</option>
+            <option value="radar">radar</option>
+            <option value="pie">pie</option>
+            <option value="doughnut">doughnut</option>
+            <option value="polarArea">polarArea</option>
+            <option value="bubble">bubble</option>
+        </select>
     </main>
 
     <footer>
 
     </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
+        integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg=="
+        crossorigin="anonymous"></script>
     <script src="js/app.js"></script>
+
+
 </body>
 
 </html>
