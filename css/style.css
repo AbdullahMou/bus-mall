@@ -1,12 +1,21 @@
-:root {
+/* :root {
 
   --main-color:#fce6d6d0;
   --border-color:rgba(224, 20, 20, 0.596);
   --Hcolor:#ff9a76;
   --bodyColor:#ff9b76ad;
   --textColor: #679b9b;
-  }
+  } */
   
+  :root {
+
+    --main-color:#212275;
+    --border-color:#F5E946;
+    --Hcolor:#F5E946;
+    --bodyColor:#8F91F7;
+    --textColor: #F5E946;
+    --shadowColor:black;
+    }
   
   *{
   box-sizing: border-box;
@@ -35,8 +44,39 @@
   padding: 20px;
   background-color:var(--main-color);
   border-radius: 20px;
-  box-shadow: 6px 4px #679b9b;
+  box-shadow: 6px 4px var(--shadowColor);
   
+  }
+  @keyframes range {
+    0%  {left:2%;}
+    30%{left: 50%;}
+    75%{left: 43%;}
+    80%{left: 43%;}
+    98%  {left:80%;}
+     }
+    
+    
+header div {
+  margin-bottom: 10px;
+  border-bottom: dashed 1px black;
+  background-color: var(--bodyColor);
+  border-radius: 20px;
+}
+  
+  #BusMove {
+    width: 200px;
+    height: 100px;
+    position: absolute;;
+    margin:2px;
+     top: 26.5%;
+    animation: range 10s infinite;
+  }
+ 
+   #store {
+    width: 200px;
+    height: 200px;
+    display: block;
+        margin:auto;
   }
   header h1{
   text-align: center;
@@ -44,7 +84,7 @@
   font-weight: bolder;
   font-size: 70px;
   font-family: 'Lobster', cursive;
-  text-shadow: 6px 4px #679b9b;
+  text-shadow: 6px 4px var(--shadowColor);
   
   }
   
@@ -54,7 +94,7 @@
   font-weight: bolder;
   font-size: 30px;
   font-family: 'Lobster', cursive;
-  text-shadow: 2px 2px #679b9b;
+  text-shadow: 2px 2px var(--shadowColor);
   padding-bottom: 10px;
   }
   
@@ -70,13 +110,15 @@
   height: 350px;
   margin:4px;
   margin-top: 40px;
-  border: solid 1px;
+  border: solid 4px;
   border-radius: 20px;
   
   }
+
+
   #ArticleSubmit img:hover{
   cursor: pointer;
-  
+  border-color: var(--textColor);
   }
   
   #section-right {
@@ -98,7 +140,7 @@
   width: 34%;
   float: left;
   border-radius: 20px;
-  box-shadow: 6px 4px #679b9b;
+  box-shadow: 6px 4px var(--shadowColor);
   display: none;
   
   }
@@ -121,8 +163,8 @@
   margin: auto;
   margin: 5px;
   border-radius: 20px;
-  background-color: #679b9b;
-  color: #ff9a76;
+  background-color: var(--bodyColor);
+  color: black;
   font-size: 16px;
   font-weight: bolder;
   text-align: center;
@@ -136,7 +178,8 @@
   height: 20px;
   }
   label{
-  color: #637373;
+  color: var(--textColor);
+  font-weight: bolder;
   
   }
   span{
@@ -156,7 +199,7 @@
   background-color:var(--main-color);
   padding: 50px;
   border-radius: 20px;
-  box-shadow: 6px 4px #679b9b;
+  box-shadow: 6px 4px var(--shadowColor);
   }
   
   article::-webkit-scrollbar {
@@ -166,7 +209,7 @@
   }
   
   article::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px #679b9b;
+  box-shadow: inset 0 0 5px var(--shadowColor);
   border-radius: 10px;
   background-color:#637373 ;
   
@@ -207,15 +250,14 @@
   }
   
   #myChart{
-  background-color: #fce6d6d0;
+  background-color:var(--bodyColor);
   border-radius: 10px;
-  box-shadow: 6px 4px #679b9b;
   border-color: var(--border-color);
   display: none;
   width: 500px;
   height: 300px;
   }
-  
+ 
   #canvas-container{
   position: relative;
   width: 90%;

@@ -239,6 +239,7 @@ function chartMake() {
   var chart = new Chart(ctx, {
     // The type of chart we want to create
     type: type,
+
     // The data for our dataset
     data: {
       labels: imagesName,
@@ -251,7 +252,7 @@ function chartMake() {
         hoverBackgroundColor: 'yellow',
       }, { //Shows bar Part
         label: 'Shows',
-        backgroundColor: 'rgb(255, 99, 132,0.7)',
+        backgroundColor: 'rgb(255, 99, 12,0.7)',
         borderColor: 'rgb(255, 99, 132)',
         data: shows,
         maxBarThickness: 15,
@@ -263,7 +264,19 @@ function chartMake() {
       maintainAspectRatio: false,
       title: {
         display: true,
-        text: 'Bus Mall Product Bar'
+        text: 'Bus Mall Product Bar',
+      }, scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+            fontColor: 'red'
+          },
+        }],
+        xAxes: [{
+          ticks: {
+            fontColor: 'red'
+          },
+        }]
       }
     }
   });
@@ -274,15 +287,15 @@ function storeData() {
   localStorage.setItem('myProducts', JSON.stringify(Product.all));
 }
 //-----------------------
-//Storing Previous data
+//Recover Previous data
 function retraveData() {
   var myData = JSON.parse(localStorage.getItem('myProducts'));
   if (myData) {
-    Product.all=[];
-    for (let i = 0; i < myData.length; i++){
-      new Product(imagesName[i],imagesPath[i]);
-      Product.all[i].vote+= myData[i].vote;
-      Product.all[i].shown+=myData[i].shown;
+    Product.all = [];
+    for (let i = 0; i < myData.length; i++) {
+      new Product(imagesName[i], imagesPath[i]);
+      Product.all[i].vote += myData[i].vote;
+      Product.all[i].shown += myData[i].shown;
     }
   }
 }
